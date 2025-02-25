@@ -1,4 +1,23 @@
+--- Avoid loading JDTLS multiple times for the same buffer
+if vim.b.jdtls_loaded then
+  return
+end
+vim.b.jdtls_loaded = true
+
+local jdtls = require('jdtls')
+local home = os.getenv('HOME')
+local mason_path = vim.fn.stdpath('data') .. '/mason'
+
+-- JDTLS paths
+local jdtls_path = mason_path .. '/packages/jdtls'
+local launcher = vim.fn.glob(jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+local config_dir = jdtls_path .. '/config_linux' -- Adjust: config_mac, config_win
+
+
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
+
+local project_pwd = vim.fn.getcwd()
+local nvim_workspace_dir = vim.fn.expand('~') .. 'nvim-space/' .. project_pwd
 
 local config = {
   -- The command that starts the language server
@@ -18,10 +37,11 @@ local config = {
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+    '-configuration', config_dir,
 
     -- 💀
     -- See `data directory configuration` section in the README
-    '-data', vim.fn.expand('~/.local/share/nvim/mason/packages/jdtls/bin/jdtls') 
+    '-data', nvim_workspace_dir 
   },
 
   -- 💀
@@ -36,8 +56,17 @@ local config = {
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   -- for a list of options
   settings = {
-    java = {
-    }
+	  java = {
+		  signatureHelp = { enabled = true },
+		  contentProvider = { preferred = 'fernflower' },
+		  completion = {
+			  favoriteStaticMembers = {
+				  'org.junit.Assert.*',
+				  'org.junit.Assume.*',
+				  'org.hamcrest.MatcherAssert.assertThat',
+			  },
+      },
+    },
   },
 
   -- Language server `initializationOptions`
@@ -48,7 +77,9 @@ local config = {
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
-    bundles = {}
+    bundles = {
+	vim.fn.glob(vim.fn.expand('~') .. 'nvim-space/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1)
+    }
   },
 }
 -- This starts a new client & server,

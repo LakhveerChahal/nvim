@@ -17,7 +17,8 @@ local config_dir = jdtls_path .. '/config_linux' -- Adjust: config_mac, config_w
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 
 local project_pwd = vim.fn.getcwd()
-local nvim_workspace_dir = vim.fn.expand('~') .. 'nvim-space/' .. project_pwd
+local project_name = vim.fn.fnamemodify(project_pwd, ':t')
+local nvim_workspace_dir = vim.fn.expand('~') .. '/nvim-space/' .. project_name
 
 local config = {
   -- The command that starts the language server
@@ -37,7 +38,9 @@ local config = {
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+    '-jar', launcher,
     '-configuration', config_dir,
+    '-log', home .. '/.cache/jdtls-startup.log',
 
     -- 💀
     -- See `data directory configuration` section in the README
@@ -78,10 +81,11 @@ local config = {
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
   init_options = {
     bundles = {
-	vim.fn.glob(vim.fn.expand('~') .. 'nvim-space/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1)
+	vim.fn.glob(vim.fn.expand('~') .. 'nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1)
     }
   },
 }
+
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(config)

@@ -14,6 +14,10 @@ return require('packer').startup(function(use)
 
 	use {
 		'williamboman/mason.nvim',
+		'williamboman/mason-lspconfig.nvim',
+		'neovim/nvim-lspconfig',
+		'mfussenegger/nvim-dap',
+		'jay-babu/mason-nvim-dap.nvim',
 		run = ':MasonUpdate', -- Updates registry on install
 	}
 
@@ -33,4 +37,15 @@ return require('packer').startup(function(use)
 
 	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 	use('theprimeagen/harpoon')
+
+	use {
+		'hrsh7th/nvim-cmp',
+		requires = {
+			'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+			'hrsh7th/cmp-buffer',   -- Optional: completions from buffer
+			'hrsh7th/cmp-path',     -- Optional: filesystem paths
+			'L3MON4D3/LuaSnip',     -- Optional: snippet engine
+			'saadparwaiz1/cmp_luasnip' -- Optional: LuaSnip integration
+		}
+	}
 end)

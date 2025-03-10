@@ -36,10 +36,15 @@ local jdtls_config = {
 		-- Add indentation settings
 		format = {
 			enabled = true, -- Ensure formatting is enabled
+			insertSpaces = true,
+			tabSize = 4,
 			settings = {
-				url = nil, -- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
-				profile = nil, -- Optional: Formatter profile name (if using XML)
+				url = vim.fn.stdpath('config') .. '/lua/stux/java_formatter.xml',-- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
+				profile = "Default", -- Optional: Formatter profile name (if using XML)
 			},
+		},
+		saveActions = {
+			organizeImports = true,
 		},
 		configuration = {
 			updateBuildConfiguration = "automatic",
@@ -50,16 +55,12 @@ local jdtls_config = {
 		maven = {
 			downloadSources = true,
 		},
-		-- Direct indentation settings (override defaults)
-		["org.eclipse.jdt.core.formatter.tabulation.char"] = "space", -- Use spaces (or "tab" for tabs)
-		["org.eclipse.jdt.core.formatter.tabulation.size"] = "4",    -- 4 spaces per indent level
 	},
-},
-init_options = {
-	bundles = {
-		vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
+	init_options = {
+		bundles = {
+			vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
+		},
 	},
-},
 }
 
 -- Mason-LSPConfig Setup

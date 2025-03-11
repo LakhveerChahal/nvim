@@ -16,7 +16,6 @@ local jdtls_config = {
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 		'-jar', vim.fn.glob(vim.fn.stdpath('data') .. '/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
 		'-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_linux', -- Adjust for your OS
-		'-log', os.getenv('HOME') .. '/.cache/jdtls-startup.log',
 		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t'),
 	},
 	root_dir = vim.fs.root(0, {".git", "mvnw"}), -- Adjust as needed
@@ -32,35 +31,40 @@ local jdtls_config = {
 					'org.hamcrest.MatcherAssert.assertThat',
 				},
 			},
-		},
-		-- Add indentation settings
-		format = {
-			enabled = true, -- Ensure formatting is enabled
-			insertSpaces = true,
-			tabSize = 4,
-			settings = {
-				url = vim.fn.stdpath('config') .. '/lua/stux/java_formatter.xml',-- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
-				profile = "Default", -- Optional: Formatter profile name (if using XML)
+			format = {
+				enabled = true, -- Ensure formatting is enabled
+				insertSpaces = true,
+				tabSize = 4,
+				settings = {
+					url = vim.fn.stdpath('config') .. '/lua/stux/java_formatter.xml',-- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
+					profile = "Custom", -- Optional: Formatter profile name (if using XML)
+				},
 			},
-		},
-		saveActions = {
-			organizeImports = true,
-		},
-		configuration = {
-			updateBuildConfiguration = "automatic",
-		},
-		eclipse = {
-			downloadSources = true,
-		},
-		maven = {
-			downloadSources = true,
-		},
+			saveActions = {
+				organizeImports = true,
+			},
+			configuration = {
+				updateBuildConfiguration = "automatic",
+			},
+			eclipse = {
+				downloadSources = true,
+			},
+			maven = {
+				downloadSources = true,
+			},
+		}
 	},
 	init_options = {
 		bundles = {
 			vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
 		},
 	},
+	on_attach = function(client, bufnr)
+		-- Set indentation settings for Java buffers
+		vim.bo[bufnr].expandtab = true
+		vim.bo[bufnr].shiftwidth = 4
+		vim.bo[bufnr].tabstop = 4
+	end,
 }
 
 -- Mason-LSPConfig Setup
@@ -74,7 +78,6 @@ require("mason-lspconfig").setup({
 		end,
 		-- JDTLS-specific handler
 		["jdtls"] = function()
-			print("Loading JDTLS via mason-lspconfig...")
 			require("lspconfig").jdtls.setup(jdtls_config)
 		end,
 	},

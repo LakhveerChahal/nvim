@@ -48,4 +48,7 @@ return require('packer').startup(function(use)
 			'saadparwaiz1/cmp_luasnip' -- Optional: LuaSnip integration
 		}
 	}
+
+	use('github/copilot.vim')
+
 end)

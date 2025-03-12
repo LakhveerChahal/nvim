@@ -1,6 +1,9 @@
 -- ~/.config/nvim/lua/stux/mason.lua
 require('mason').setup()
 
+-- Import LSP keybindings
+local key_bindings = require('stux.key-bindings')
+
 -- JDTLS Configuration
 local jdtls_config = {
 	cmd = {
@@ -56,15 +59,18 @@ local jdtls_config = {
 		}
 	},
 	init_options = {
-		bundles = {
-			vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
-		},
 	},
 	on_attach = function(client, bufnr)
 		-- Set indentation settings for Java buffers
 		vim.bo[bufnr].expandtab = true
 		vim.bo[bufnr].shiftwidth = 4
 		vim.bo[bufnr].tabstop = 4
+
+		-- keybindings
+		key_bindings.setup_jdtls_keymappings(bufnr)
+
+		-- Auto-discover main classes
+		require('jdtls.dap').setup_dap_main_class_configs()
 	end,
 }
 

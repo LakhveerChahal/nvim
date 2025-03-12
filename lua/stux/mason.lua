@@ -14,11 +14,12 @@ local jdtls_config = {
 		'--add-modules=ALL-SYSTEM',
 		'--add-opens', 'java.base/java.util=ALL-UNNAMED',
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+		'-javaagent:' .. vim.fn.stdpath('data') .. '/mason/packages/jdtls/lombok.jar',
 		'-jar', vim.fn.glob(vim.fn.stdpath('data') .. '/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
 		'-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_linux', -- Adjust for your OS
-		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t'),
+		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":h:t") .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
 	},
-	root_dir = vim.fs.root(0, {".git", "mvnw"}), -- Adjust as needed
+	root_dir = vim.fs.root(0, {"mvnw", "pom.xml"}), -- Adjust as needed
 	capabilities = require('cmp_nvim_lsp').default_capabilities(),
 	settings = {
 		java = {

@@ -51,4 +51,17 @@ return require('packer').startup(function(use)
 
 	use('github/copilot.vim')
 
+	use { 'rcarriga/nvim-dap-ui', requires = {'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio'} }
+
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+	}
+
+	use {
+		"linrongbin16/lsp-progress.nvim",
+		config = function()
+		  require("lsp-progress").setup()
+		end,
+	}
 end)

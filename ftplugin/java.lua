@@ -75,12 +75,23 @@ local jdtls_config = {
 			},
 			configuration = {
 				updateBuildConfiguration = "automatic",
+				maven = {
+					globalSettings = vim.fn.expand('~') .. "/.m2/settings.xml"
+				}
 			},
 			eclipse = {
 				downloadSources = true,
 			},
 			maven = {
 				downloadSources = true,
+				updateSnapshots = true
+			},
+			jdt = {
+				ls = {
+					lombokSupport = {
+						enabled = true,
+					}
+				}
 			},
 		}
 	},

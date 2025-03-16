@@ -38,8 +38,8 @@ local jdtls_config = {
 		'-Declipse.product=org.eclipse.jdt.ls.core.product',
 		'-Dlog.protocol=true',
 		'-Dlog.level=ALL',
-		'-Xss4m',
-		'-Xmx1g',
+		'-Xss8m',
+		'-Xmx8g',
 		'--add-modules=ALL-SYSTEM',
 		'--add-opens', 'java.base/java.util=ALL-UNNAMED',
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
@@ -51,6 +51,9 @@ local jdtls_config = {
 	root_dir = util.path.dirname(find_topmost_pom(vim.fn.expand('%:p'))),
 	capabilities = require('cmp_nvim_lsp').default_capabilities(),
 	settings = {
+		-- Here you can configure eclipse.jdt.ls specific settings
+		-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+		-- for a list of options
 		java = {
 			signatureHelp = { enabled = true },
 			contentProvider = { preferred = 'fernflower' },
@@ -66,7 +69,7 @@ local jdtls_config = {
 				insertSpaces = true,
 				tabSize = 4,
 				settings = {
-					url = vim.fn.stdpath('config') .. '/lua/stux/java_formatter.xml',-- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
+					url = vim.fn.stdpath('config') .. '/after/plugin/java_formatter.xml',-- Optional: Path to a custom Eclipse formatter XML (leave nil for defaults)
 					profile = "Custom", -- Optional: Formatter profile name (if using XML)
 				},
 			},

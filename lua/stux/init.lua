@@ -1,5 +1,4 @@
-require("stux.remap")
+require("stux.config.lazy")
+
 require("stux.format")
-require("stux.mason")
-require("stux.completion")
 require("stux.set")

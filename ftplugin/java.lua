@@ -1,5 +1,5 @@
 -- Import LSP keybindings
-local key_bindings = require('stux.key-bindings')
+local key_bindings = require('stux.java-bindings')
 
 local util = require('lspconfig.util')
 
@@ -116,7 +116,6 @@ local jdtls_config = {
 		require('jdtls.dap').setup_dap_main_class_configs()
 	end,
 }
-
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(jdtls_config)

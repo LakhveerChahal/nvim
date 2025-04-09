@@ -1,15 +1,13 @@
 require("lsp-progress").setup({
-    -- Optional: Customize the spinner animation
-    spinner = { "⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷" },
-    -- How long to show the last message after it’s done (in ms)
-    decay = 1000,
-    -- Format for each LSP client’s progress messages
     client_format = function(client_name, spinner, series_messages)
-        if #series_messages == 0 then
-            return nil
-        end
-        return client_name .. " " .. spinner .. " " .. table.concat(series_messages, ", ")
+        return #series_messages > 0
+            and ("[" .. client_name .. "] " .. spinner .. " " .. table.concat(
+                series_messages,
+                ", "
+            ))
+            or nil
     end,
+
 })
 
 require("lualine").setup({

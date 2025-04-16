@@ -43,9 +43,9 @@ local jdtls_config = {
 		'--add-modules=ALL-SYSTEM',
 		'--add-opens', 'java.base/java.util=ALL-UNNAMED',
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-		'-javaagent:' .. vim.fn.expand('~') .. '/nvim-plugins/lombok.jar',
-		'-jar', vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/nvim-jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
-		'-configuration', vim.fn.expand('~') .. '/nvim-plugins/nvim-jdtls/config_linux', -- Adjust for your OS
+		'-javaagent:' .. vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/lombok.jar',
+		'-jar', vim.fn.glob(vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+		'-configuration', vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/config_linux', -- Adjust for your OS
 		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":h:t") .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
 	},
 	root_dir = util.path.dirname(find_topmost_pom(vim.fn.expand('%:p'))),
@@ -100,7 +100,7 @@ local jdtls_config = {
 	},
 	init_options = {
 		bundles = {
-			vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
+			vim.fn.glob(vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
 		},
 		extendedClientCapabilities = {
 			progressReportProvider = true,

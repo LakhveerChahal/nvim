@@ -23,10 +23,30 @@ vim.g.maplocalleader = "\\"
 
 -- Setup lazy.nvim
 require("lazy").setup({
-	spec = "stux.plugins",
+	{ import = "stux.plugins" }, 
+	{ import = "stux.plugins.lsp" },
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
 	install = { colorscheme = { "habamax" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
+	performance = {
+		rtp = {
+			-- disable some rtp plugins
+			disabled_plugins = {
+				"gzip",
+				-- "matchit",
+				-- "matchparen",
+				-- "netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"zipPlugin",
+			},
+			reset = true,
+			cache = {
+				enable = true,
+				path = vim.fn.stdpath("cache") .. "/lazy/cache",
+			},
+		}
+	}
 })

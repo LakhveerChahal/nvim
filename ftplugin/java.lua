@@ -45,7 +45,7 @@ local jdtls_config = {
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 		'-javaagent:' .. vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/lombok.jar',
 		'-jar', vim.fn.glob(vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
-		'-configuration', vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/config_linux', -- Adjust for your OS
+		'-configuration', vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/config_mac_arm', -- Adjust for your OS
 		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":h:t") .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
 	},
 	root_dir = util.path.dirname(find_topmost_pom(vim.fn.expand('%:p'))),

@@ -1,3 +1,8 @@
+-- Skip loading JDTLS if it is already running
+if vim.b.jdtls_active then
+	return
+end
+
 -- Import LSP keybindings
 local key_bindings = require('stux.java-bindings')
 
@@ -43,12 +48,12 @@ local jdtls_config = {
 		'--add-modules=ALL-SYSTEM',
 		'--add-opens', 'java.base/java.util=ALL-UNNAMED',
 		'--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-		'-javaagent:' .. vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/lombok.jar',
-		'-jar', vim.fn.glob(vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
-		'-configuration', vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/nvim-jdtls/config_linux', -- Adjust for your OS
+		'-javaagent:' .. vim.fn.expand('~') .. '/nvim-plugins/lombok.jar',
+		'-jar', vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/nvim-jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+		'-configuration', vim.fn.expand('~') .. '/nvim-plugins/nvim-jdtls/config_linux', -- Adjust for your OS
 		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":h:t") .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
 	},
-	root_dir = util.path.dirname(find_topmost_pom(vim.fn.expand('%:p'))),
+	root_dir = vim.fn.getcwd(),
 	capabilities = require('cmp_nvim_lsp').default_capabilities(),
 	settings = {
 		-- Here you can configure eclipse.jdt.ls specific settings
@@ -98,9 +103,16 @@ local jdtls_config = {
 			},
 		}
 	},
+	-- Language server `initializationOptions`
+	-- You need to extend the `bundles` with paths to jar files
+	-- if you want to use additional eclipse.jdt.ls plugins.
+	--
+	-- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
+	--
+	-- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
 	init_options = {
 		bundles = {
-			vim.fn.glob(vim.fn.expand('~') .. '/.config/nvim/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
+			vim.fn.glob(vim.fn.expand('~') .. '/nvim-plugins/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar', 1),
 		},
 		extendedClientCapabilities = {
 			progressReportProvider = true,
@@ -113,7 +125,7 @@ local jdtls_config = {
 		-- Setup DAP with JDTLS
 		require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 		-- Auto-discover main classes
-		require('jdtls.dap').setup_dap_main_class_configs()
+		require('jdtls.dap').setup_dap_main_class_configs()		
 	end,
 }
 -- This starts a new client & server,

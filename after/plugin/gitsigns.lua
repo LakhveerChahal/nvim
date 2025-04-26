@@ -1,6 +1,7 @@
 require('gitsigns').setup{
     current_line_blame = true,
     on_attach = function(bufnr)
+        local map = vim.keymap.set
         -- Actions
         map('n', '<leader>hs', ':Gitsigns stage_hunk<CR>', { buffer = bufnr, desc = 'Stage hunk' })
         map('n', '<leader>hr', ':Gitsigns reset_hunk<CR>', { buffer = bufnr, desc = 'Reset hunk' })

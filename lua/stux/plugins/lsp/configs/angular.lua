@@ -108,7 +108,7 @@ function M.setup()
           vim.keymap.set("n", "<leader>ac", goto_component_css, opts)
           vim.keymap.set("n", "<leader>al", goto_component_less, opts)
       end,
-      root_dir = util.root_pattern("angular.json", "package.json")
+      root_dir = util.root_pattern("angular.json", "package.json"),
   }
 end
 

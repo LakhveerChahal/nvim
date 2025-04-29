@@ -10,6 +10,15 @@ function M.setup(capabilities)
       vim.keymap.set("n", "K", "<cmd>TSToolsHover<cr>", { buffer = bufnr })
       vim.keymap.set("n", "<leader>ca", "<cmd>TSToolsFixAll<cr>", { buffer = bufnr })
       vim.keymap.set("n", "<leader>rn", "<cmd>TSToolsRename<cr>", { buffer = bufnr })
+      vim.keymap.set("n", "<leader>o", "<cmd>TSToolsOrganizeImports<cr>", { buffer = bufnr })
+
+      -- Optimize imports on save
+      vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = "*.ts,*.tsx",
+          callback = function()
+              vim.cmd("TSToolsOrganizeImports")
+          end,
+      })
     end,
     settings = {
       complete_function_calls = true,

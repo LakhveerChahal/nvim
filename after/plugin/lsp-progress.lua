@@ -12,7 +12,8 @@ require("lsp-progress").setup({
 
 require("lualine").setup({
     sections = {
-        lualine_c = {
+        lualine_c = { 'filename' },
+        lualine_y = {
             -- Add LSP progress as a component
             function()
                 return require("lsp-progress").progress()

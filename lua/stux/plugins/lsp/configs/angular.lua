@@ -7,6 +7,10 @@ local function get_base(filename)
     :gsub('%.component%.html$', '.component')
     :gsub('%.component%.css$', '.component')
     :gsub('%.component%.less$', '.component')
+    :gsub('%.ts$', '')
+    :gsub('%.html$', '')
+    :gsub('%.css$', '')
+    :gsub('%.less$', '')
 end
 
 function goto_component_ts()

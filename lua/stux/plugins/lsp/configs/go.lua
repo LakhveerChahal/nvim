@@ -1,6 +1,6 @@
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require("lspconfig").gopls.setup{
+vim.lsp.config('gopls', {
     capabilities = capabilities,
     settings = {
         gopls = {
@@ -8,4 +8,4 @@ require("lspconfig").gopls.setup{
             gofumpt = true,
         },
     },
-}
+})

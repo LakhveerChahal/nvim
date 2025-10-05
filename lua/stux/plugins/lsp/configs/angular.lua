@@ -69,7 +69,7 @@ function M.setup()
     local capabilities = require('stux.plugins.lsp.configs.common').setup()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-    require'lspconfig'.angularls.setup{
+    vim.lsp.config('angularls', {
         capabilities = capabilities,
         settings = {
             angular = {
@@ -111,7 +111,7 @@ function M.setup()
 
         end,
         root_dir = util.root_pattern("angular.json", "package.json"),
-    }
+    })
 end
 
 return M

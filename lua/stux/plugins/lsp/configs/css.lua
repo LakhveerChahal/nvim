@@ -1,10 +1,10 @@
 local M = {}
 
 function M.setup()
-  local lspconfig = require("lspconfig")
+  local lspconfig = vim.lsp.config 
   local capabilities = require("stux.plugins.lsp.configs.common").setup()
 
-  lspconfig.cssls.setup({
+  lspconfig('cssls', {
     capabilities = capabilities,
     settings = {
       css = {

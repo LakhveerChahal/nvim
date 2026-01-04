@@ -65,12 +65,14 @@ function goto_component_spec()
 end
 
 function M.setup()
-    local util = require('lspconfig.util')
     local capabilities = require('stux.plugins.lsp.configs.common').setup()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    local project_library_path = '/home/lucky/namaste-fpga/frontend/jk-learning-ui/'
 
+    local cmd = {"ngserver", "--stdio", "--tsProbeLocations", project_library_path , "--ngProbeLocations", project_library_path}
     vim.lsp.config('angularls', {
         capabilities = capabilities,
+        cmd = cmd,
         settings = {
             angular = {
                 enable = true,
@@ -108,10 +110,9 @@ function M.setup()
             vim.keymap.set("n", "<leader>ac", goto_component_css, opts)
             vim.keymap.set("n", "<leader>al", goto_component_less, opts)
             vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
-
         end,
-        root_dir = util.root_pattern("angular.json", "package.json"),
     })
+
 end
 
 return M

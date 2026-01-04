@@ -125,7 +125,7 @@ local jdtls_config = {
 		-- Setup DAP with JDTLS
 		require('jdtls').setup_dap({ hotcodereplace = 'auto' })
 		-- Auto-discover main classes
-		require('jdtls.dap').setup_dap_main_class_configs()		
+		require('jdtls.dap').setup_dap_main_class_configs()
 	end,
 }
 -- This starts a new client & server,

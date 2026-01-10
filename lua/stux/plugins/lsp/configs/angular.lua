@@ -67,7 +67,7 @@ end
 function M.setup()
     local capabilities = require('stux.plugins.lsp.configs.common').setup()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
-    local project_library_path = '/home/lucky/namaste-fpga/frontend/jk-learning-ui/'
+    local project_library_path = vim.fn.getcwd()
 
     local cmd = {"ngserver", "--stdio", "--tsProbeLocations", project_library_path , "--ngProbeLocations", project_library_path}
     vim.lsp.config('angularls', {

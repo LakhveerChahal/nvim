@@ -19,11 +19,6 @@ function M.setup_jdtls_keymappings(bufnr)
   vim.keymap.set('n', '<leader>dr', '<cmd>lua require("dap").restart() <CR>', opts, { desc = "Run main class" })
   vim.keymap.set('n', '<leader>db', '<cmd>lua require("dap").toggle_breakpoint()<CR>', opts, { desc = "Toggle breakpoint" })
 
-  -- Diagnostics
-  vim.keymap.set('n', '<leader>sd', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts, { desc = "Show diagnostics" })
-  vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts, { desc = "Previous diagnostic" })
-  vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts, { desc = "Next diagnostic" })
-
 end
 
 return M

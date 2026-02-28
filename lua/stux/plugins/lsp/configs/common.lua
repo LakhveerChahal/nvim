@@ -23,17 +23,14 @@ function M.setup()
             vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts, { desc = "Code action" })
 
             -- Diagnostics
-            vim.diagnostic.config({
-                jump = {
-                    on_jump = function(diagnostic)
-                        -- Custom logic here, like opening a float with specific borders
-                        vim.diagnostic.open_float({ focus = false })
-                    end,
-                },
-            })
             vim.keymap.set('n', '<leader>sd', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts, { desc = "Show diagnostics" })
-            -- vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }); vim.schedule(vim.diagnostic.open_float) end, opts, { desc = "Previous diagnostic" })
-            -- vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1 }); vim.schedule(vim.diagnostic.open_float) end, opts, { desc = "Next diagnostic" })
+
+            vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
+            vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1}) end, { desc = "Next diagnostic" })
+            vim.keymap.set('n', '[e', function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Previous error" })
+            vim.keymap.set('n', ']e', function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next error" })
+            vim.keymap.set('n', '[w', function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Previous warning" })
+            vim.keymap.set('n', ']w', function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Next warning" })
         end
     })
 

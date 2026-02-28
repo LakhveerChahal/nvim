@@ -1,17 +1,29 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     build = ":TSUpdate",
-    config = function ()
-      local configs = require("nvim-treesitter.configs")
+    config = function()
+        local treesitter = require("nvim-treesitter")
+        treesitter.setup({
+            install_dir = vim.fn.stdpath("data") .. "/site",
+            ensure_installed = {
+            "typescript",
+            "python",
+            "json",
+            "bash",
+            "html",
+            "css",
+            "yaml",
+            "javascript",
+            "go",
+        }
+        })
 
-      configs.setup({
-          ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
-          sync_install = false,
-          highlight = { enable = true },
-          indent = { enable = true },
+        -- Enable treesitter-based highlighting
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function()
+                pcall(vim.treesitter.start)
+            end,
         })
     end,
-    dependencies = {
-        { "nvim-treesitter/nvim-treesitter-angular" }
-    },
 }

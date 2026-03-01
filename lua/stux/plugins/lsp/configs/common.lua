@@ -1,6 +1,14 @@
 local M = {}
 
 function M.setup()
+    vim.diagnostic.config({
+        float = {
+            focus = false,
+            border = 'rounded',
+            source = true,
+        },
+    })
+
     vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
@@ -25,12 +33,19 @@ function M.setup()
             -- Diagnostics
             vim.keymap.set('n', '<leader>sd', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts, { desc = "Show diagnostics" })
 
-            vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic" })
-            vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count = 1}) end, { desc = "Next diagnostic" })
-            vim.keymap.set('n', '[e', function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Previous error" })
-            vim.keymap.set('n', ']e', function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next error" })
-            vim.keymap.set('n', '[w', function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Previous warning" })
-            vim.keymap.set('n', ']w', function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Next warning" })
+            local function jump_and_show(opts)
+                vim.diagnostic.jump(opts)
+                vim.defer_fn(function()
+                    vim.diagnostic.open_float(nil, { focus = false })
+                end, 50)
+            end
+
+            vim.keymap.set('n', '[d', function() jump_and_show({ count = -1 }) end, { desc = "Previous diagnostic" })
+            vim.keymap.set('n', ']d', function() jump_and_show({ count = 1}) end, { desc = "Next diagnostic" })
+            vim.keymap.set('n', '[e', function() jump_and_show({ count = -1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Previous error" })
+            vim.keymap.set('n', ']e', function() jump_and_show({ count = 1, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next error" })
+            vim.keymap.set('n', '[w', function() jump_and_show({ count = -1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Previous warning" })
+            vim.keymap.set('n', ']w', function() jump_and_show({ count = 1, severity = vim.diagnostic.severity.WARN }) end, { desc = "Next warning" })
         end
     })
 

@@ -24,7 +24,7 @@ function M.setup()
 
             -- Information
             vim.keymap.set('n', 'H', '<cmd>lua vim.lsp.buf.hover()<CR>', opts, { desc = "Show hover documentation" })
-            vim.keymap.set('n', '<C-i>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts, { desc = "Show signature help" })
+            vim.keymap.set('n', 'gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts, { desc = "Show signature help" })
 
             -- Refactoring
             vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts, { desc = "Rename symbol" })

@@ -51,6 +51,7 @@ function M.setup()
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.colorProvider = true
 
     return capabilities
 end

@@ -1,8 +1,7 @@
 local M = {}
 
-function M.setup()
+function M.setup(capabilities)
   local lspconfig = vim.lsp.config
-  local capabilities = require("florian.plugins.lsp.configs.common").setup()
 
   lspconfig('html', {
     capabilities = capabilities,

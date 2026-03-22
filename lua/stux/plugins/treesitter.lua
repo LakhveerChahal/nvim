@@ -3,10 +3,12 @@ return {
     lazy = false,
     build = ":TSUpdate",
     config = function()
-        local treesitter = require("nvim-treesitter")
-        treesitter.setup({
+        require("nvim-treesitter").setup({
             install_dir = vim.fn.stdpath("data") .. "/site",
-            ensure_installed = {
+        })
+
+        -- Install parsers (async, no-op if already installed)
+        require("nvim-treesitter").install({
             "typescript",
             "python",
             "json",
@@ -16,7 +18,6 @@ return {
             "yaml",
             "javascript",
             "go",
-        }
         })
 
         -- Enable treesitter-based highlighting

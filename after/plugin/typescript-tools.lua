@@ -1,6 +1,5 @@
 -- local common = require("common")
 -- local capabilities = common.setup()
-print("setting up ts tools")
 require("typescript-tools").setup {
     -- capabilities = capabilities,
     on_attach = function(client, bufnr)

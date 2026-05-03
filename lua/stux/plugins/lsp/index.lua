@@ -16,6 +16,7 @@ return {
         require("stux.plugins.lsp.configs.typescript").setup(capabilities)
         require("stux.plugins.lsp.configs.angular").setup()
         require("stux.plugins.lsp.configs.go")
+        require("stux.plugins.lsp.configs.python").setup(capabilities)
       end
     }
   }

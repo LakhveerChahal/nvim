@@ -7,7 +7,7 @@ function M.setup()
             local opts = { noremap = true, silent = true, buffer = bufnr }
 
             -- Navigation
-            vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "Go to definition" })
+            vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts, { desc = "Go to definition" })
             vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_declarations<CR>', opts, { desc = "Go to declaration" })
             vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts, { desc = "Go to implementation" })
             vim.keymap.set('n', 'gt', '<cmd>Telescope lsp_type_definitions<CR>', opts, { desc = "Go to type definition" })

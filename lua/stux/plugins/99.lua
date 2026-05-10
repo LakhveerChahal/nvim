@@ -1,6 +1,8 @@
 return {
     "ThePrimeagen/99",
     config = function()
+        vim.fn.setenv("OPENCODE_PERMISSION", '{"edit": "allow"}')
+
         local _99 = require("99")
 
         -- For logging that is to a file if you wish to trace through requests
@@ -9,6 +11,7 @@ return {
         local cwd = vim.uv.cwd()
         local basename = vim.fs.basename(cwd)
         _99.setup({
+            model = "github-copilot/claude-opus-4.6",
             -- provider = _99.ClaudeCodeProvider,  -- default: OpenCodeProvider
             logger = {
                 level = _99.DEBUG,
@@ -76,6 +79,10 @@ return {
         -- so just prepare for it now
         vim.keymap.set("v", "<leader>9v", function()
             _99.visual()
+        end)
+
+        vim.keymap.set("v", "<leader>9t", function()
+            _99.tutorial()
         end)
 
         --- if you have a request you dont want to make any changes, just cancel it

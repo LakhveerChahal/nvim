@@ -55,6 +55,3 @@ cmp.setup({
     end,
   },
 })
-
--- for auto popups
-cmp.event:on('InsertEnter', cmp.mapping.complete())

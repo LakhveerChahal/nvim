@@ -1,3 +1,0 @@
--- Treesitter is configured in lua/stux/plugins/treesitter.lua
--- Use :TSInstall <language> to install additional parsers
--- Use :TSUpdate to update all installed parsers

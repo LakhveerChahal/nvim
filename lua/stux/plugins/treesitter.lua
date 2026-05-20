@@ -22,6 +22,7 @@ return {
             "yaml",
             "javascript",
             "go",
+            "kotlin",
         })
 
         -- Enable treesitter-based highlighting

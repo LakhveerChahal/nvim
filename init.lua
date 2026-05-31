@@ -2,7 +2,6 @@ vim.wo.relativenumber = true
 vim.wo.number = true
 
 -- Global settings for Neovim 0.11
-vim.o.winborder = 'rounded'
 vim.o.completeopt = 'menuone,noinsert,popup,fuzzy'
 
 require("stux")

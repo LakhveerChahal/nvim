@@ -1,46 +1,41 @@
-local M = {}
+-- LSP attach autocmd: keymaps + builtin completion
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    local opts = { noremap = true, silent = true, buffer = ev.buf }
 
-function M.setup()
-    vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-            local opts = { noremap = true, silent = true, buffer = bufnr }
+    -- Builtin autocompletion
+    if client and client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
 
-            -- Navigation
-            vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts, { desc = "Go to definition" })
-            vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_declarations<CR>', opts, { desc = "Go to declaration" })
-            vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts, { desc = "Go to implementation" })
-            vim.keymap.set('n', 'gt', '<cmd>Telescope lsp_type_definitions<CR>', opts, { desc = "Go to type definition" })
-            vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts, { desc = "Find references" })
-            vim.keymap.set('n', '<leader>pd', '<cmd>lua vim.lsp.buf.peek_definition()<CR>', opts, { desc = "Peek definition" })
+    -- Navigation (using Telescope)
+    vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
+    vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_declarations<CR>', opts)
+    vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+    vim.keymap.set('n', 'gt', '<cmd>Telescope lsp_type_definitions<CR>', opts)
+    vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
 
-            -- Information
-            vim.keymap.set('n', 'H', '<cmd>lua vim.lsp.buf.hover()<CR>', opts, { desc = "Show hover documentation" })
-            vim.keymap.set('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts, { desc = "Show signature help" })
+    -- Information
+    vim.keymap.set('n', 'H', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<leader>sh', vim.lsp.buf.signature_help, opts)
 
-            -- Refactoring
-            vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts, { desc = "Rename symbol" })
-            vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts, { desc = "Code action" })
+    -- Refactoring
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 
-            -- Diagnostics
-            vim.keymap.set('n', '<leader>sd', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts, { desc = "Show diagnostics" })
-            vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts, { desc = "Previous diagnostic" })
-            vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts, { desc = "Next diagnostic" })
-            vim.keymap.set('n', '[e', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Previous error" })
-            vim.keymap.set('n', ']e', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Next error" })
-            vim.keymap.set('n', '[w', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, { desc = "Previous warning" })
-            vim.keymap.set('n', ']w', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, { desc = "Next warning" })
-            vim.diagnostic.config({
-                virtual_text = true,
-                signs = true,
-            })
-        end
-    })
+    -- Diagnostics
+    vim.keymap.set('n', '<leader>sd', vim.diagnostic.setqflist, opts)
+    vim.keymap.set('n', '[e', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, opts)
+    vim.keymap.set('n', ']e', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, opts)
+    vim.keymap.set('n', '[w', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, opts)
+    vim.keymap.set('n', ']w', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, opts)
+  end,
+})
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-    return capabilities
-end
-
-return M
+-- Diagnostics configuration
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+})

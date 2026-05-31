@@ -6,31 +6,23 @@ end
 -- Import LSP keybindings
 local key_bindings = require('stux.java-bindings')
 
-local util = require('lspconfig.util')
-
 local function find_topmost_pom(filepath)
-	local util = require('lspconfig.util')
-	
-	-- Find the project root by locating the .git directory
-	local project_root = util.find_git_ancestor(filepath)
+	local project_root = vim.fs.root(filepath, '.git')
 	if not project_root then
-	  return 'default' -- No .git found, meaning no project root
+	  return 'default'
 	end
-	
-	-- Start from the directory of the given file
-	local current_dir = util.path.dirname(filepath)
+
+	local current_dir = vim.fn.fnamemodify(filepath, ':h')
 	local topmost_pom = nil
-	
-	-- Traverse up the directory tree until reaching the project root
+
 	while current_dir and current_dir ~= project_root do
 	  local pom_path = current_dir .. '/pom.xml'
 	  if vim.fn.filereadable(pom_path) == 1 then
 		topmost_pom = pom_path
-		-- Don't break here; keep going up to find the topmost one
 	  end
-	  current_dir = util.path.dirname(current_dir)
+	  current_dir = vim.fn.fnamemodify(current_dir, ':h')
 	end
-	
+
 	return topmost_pom
 end
 
@@ -54,7 +46,7 @@ local jdtls_config = {
 		'-data', os.getenv('HOME') .. '/nvim-space/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":h:t") .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t"),
 	},
 	root_dir = vim.fn.getcwd(),
-	capabilities = require('cmp_nvim_lsp').default_capabilities(),
+	capabilities = vim.lsp.protocol.make_client_capabilities(),
 	settings = {
 		-- Here you can configure eclipse.jdt.ls specific settings
 		-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request

@@ -8,6 +8,10 @@ return {
         pycodestyle = {
           ignore = { 'E501' },
         },
+        mypy = {
+          enabled = true,
+          live_mode = true,
+        },
       },
     },
   },

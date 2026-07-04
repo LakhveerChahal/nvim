@@ -7,4 +7,4 @@ vim.o.completeopt = 'menuone,noinsert,popup,fuzzy'
 require("stux")
 
 -- Enable LSP servers (configs are in lsp/*.lua)
-vim.lsp.enable({ 'gopls', 'pylsp', 'ts_ls', 'angularls', 'html', 'cssls', 'lua_ls' })
+vim.lsp.enable({ 'gopls', 'basedpyright', 'ruff', 'ts_ls', 'angularls', 'html', 'cssls', 'lua_ls' })

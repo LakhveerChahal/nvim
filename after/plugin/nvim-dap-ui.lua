@@ -18,6 +18,9 @@ dap.adapters.python = {
         initialize_timeout_sec = 15,  -- Increase timeout for slow environments
     },
 }
+dap.configurations.python = {}
+dap.listeners.after.event_initialized["dapui_config"] = function()
+end
 dap.listeners.before.event_terminated["dapui_config"] = function()
   dapui.close()
 end
@@ -25,7 +28,9 @@ dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close()
 end
 -- 3. Set up Python adapter with venv detection
-require("dap-python").setup("python")  -- uses current venv's python
+require("dap-python").setup("python", {
+  include_configs = false
+})  -- uses current venv's python
 -- 4. Global DAP keybindings
 vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Debug: Continue" })
 vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })

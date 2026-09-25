@@ -4,9 +4,6 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = "Toggle nvim file tree explorer" })
 
--- optionally enable 24-bit colour
-vim.opt.termguicolors = true
-
 require("nvim-tree").setup({
   sort = {
     sorter = "case_sensitive",

@@ -99,10 +99,10 @@ return {
 
     local function get_base(filename)
       return filename:gsub('%.component%.spec%.ts$', '.component')
-        :gsub('%.component%.ts$', '.component')
-        :gsub('%.component%.html$', '.component')
-        :gsub('%.component%.css$', '.component')
-        :gsub('%.component%.less$', '.component')
+        :gsub('%.ts$', '')
+        :gsub('%.html$', '')
+        :gsub('%.css$', '')
+        :gsub('%.less$', '')
     end
 
     local opts = { noremap = true, silent = true, buffer = bufnr }

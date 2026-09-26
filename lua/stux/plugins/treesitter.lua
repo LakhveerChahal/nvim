@@ -7,30 +7,36 @@ return {
         local ts_path = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/runtime"
         vim.opt.rtp:prepend(ts_path)
 
-        require("nvim-treesitter").setup({
-            install_dir = vim.fn.stdpath("data") .. "/site",
-        })
+        -- Use nvim-treesitter.configs for setup
+        require("nvim-treesitter.configs").setup({
+            -- Specify where to install the parsers
+            parser_install_dir = vim.fn.stdpath("data") .. "/site",
 
-        -- Install parsers (async, no-op if already installed)
-        require("nvim-treesitter").install({
-            "typescript",
-            "python",
-            "json",
-            "bash",
-            "html",
-            "css",
-            "yaml",
-            "javascript",
-            "go",
-            "kotlin",
-        })
+            -- Parsers to install (async, no-op if already installed)
+            ensure_installed = {
+                "typescript",
+                "python",
+                "json",
+                "bash",
+                "html",
+                "css",
+                "yaml",
+                "javascript",
+                "go",
+            },
 
-        -- Enable treesitter-based highlighting and indentation
-        vim.api.nvim_create_autocmd("FileType", {
-            callback = function()
-                pcall(vim.treesitter.start)
-                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-            end,
+            -- Automatically install missing parsers when entering buffer
+            auto_install = true,
+
+            -- Enable treesitter-based highlighting
+            highlight = {
+                enable = true,
+            },
+
+            -- Enable treesitter-based indentation
+            indent = {
+                enable = true,
+            },
         })
     end,
 }

@@ -19,6 +19,12 @@ require("lualine").setup({
                 return require("lsp-progress").progress()
             end,
         },
+        lualine_z = {
+            {
+                -- Show the currently connected server and its status
+                require("opencode").statusline,
+            },
+        },
     },
     opts = function(_, opts)
         local trouble = require("trouble")

@@ -47,6 +47,6 @@ return {
     vim.keymap.set({ "n", "x" }, "go",      function() return require("opencode").operator("@this") end,         { desc = "Send range to OpenCode", expr = true })
     vim.keymap.set({ "n" },      "goo",     function() return require("opencode").operator("@this") .. "_" end,  { desc = "Send line to OpenCode", expr = true })
 
-    vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n><C-w>p", { desc = "Focus previous window" })
+    vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Focus left window" })
   end,
 }
